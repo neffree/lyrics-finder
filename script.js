@@ -6,7 +6,7 @@ async function searchLyrics() {
     const format = 'json'; // Format can be xml or json, here we use json
 
     try {
-        const response = await fetch(`${apiUrl}?uid=${uid}&tokenid=${tokenid}&term=${searchInput}&format=${format}`);
+        const response = await fetch(`http://localhost:8080/searchLyrics?term=${encodeURIComponent(searchInput)}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
