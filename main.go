@@ -21,8 +21,8 @@ type ApiResponse struct {
 }
 
 func searchLyricsHandler(w http.ResponseWriter, r *http.Request) {
-	// Set CORS headers
-	w.Header().Set("Access-Control-Allow-Origin", "*") // This is not recommended for production use
+	// Set CORS headers for development
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5050")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
@@ -34,9 +34,10 @@ func searchLyricsHandler(w http.ResponseWriter, r *http.Request) {
 	apiUrl := "https://www.stands4.com/services/v2/lyrics.php"
 	uid := os.Getenv("UID")
 	tokenid := os.Getenv("TOKENID")
+	artist := r.URL.Query().Get("artist")
 
 	// Make the API request
-	resp, err := http.Get(apiUrl + "?uid=" + uid + "&tokenid=" + tokenid + "&term=" + searchTerm + "&format=json")
+	resp, err := http.Get(apiUrl + "?uid=" + uid + "&tokenid=" + tokenid + "&term=" + searchTerm + "&artist=" + artist + "&format=json")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

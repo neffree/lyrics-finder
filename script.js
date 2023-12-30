@@ -1,18 +1,19 @@
 async function searchLyrics() {
     const searchInput = document.getElementById('searchInput').value;
+    const artistInput = document.getElementById('artistInput').value;
     const apiUrl = 'https://www.stands4.com/services/v2/lyrics.php';
     const uid = '[insert UID]'; // Replace with  UID
     const tokenid = '[insert token ID]'; // Replace with Token ID
     const format = 'json'; // Format can be xml or json, here we use json
 
     try {
-        const response = await fetch(`http://localhost:8080/searchLyrics?term=${encodeURIComponent(searchInput)}`);
+        const response = await fetch(`http://localhost:8080/searchLyrics?term=${encodeURIComponent(searchInput)}&artist=${encodeURIComponent(artistInput)}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         displayResults(data);
-        console.log(data);
+        console.log(response);
     } catch (error) {
         console.error('Error fetching data: ', error);
     }
